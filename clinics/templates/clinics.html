@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load static from pipeline_extra %}
+
+{% block title %}{% page_attribute 'title' %}{% endblock title %}
+
+{% block content %}
+    <section id="content-landing">
+        <div class="breadcrumbs">
+            <div class="wrapper">
+                <p>
+                {% block breadcrumbs %}
+                    {% show_breadcrumb 0 "partials/breadcrumb.html" 0 %}
+                {% endblock breadcrumbs %}
+                </p>
+            </div>
+        </div>
+        <div class="landing-wrapper cf">
+            <div id="shop_background" class="injuryclinic">
+                <h3 class="training">INJURY CLINICS</h3>
+                <section id="sidebar">
+                    <img src="{% static "img/HolidayInnMPU.gif" %}" class="mpu1" alt="" border="0"/>
+                </section>
+
+                <div class="article-content injuryclinic">
+                    <img src="{% static "img/Injuryclinics.JPG" %}" class="injurylogo" alt=""
+                         border="0"/>
+
+                    {% static_placeholder "content" %}
+
+                    <div id="contact_button">
+                        <a href="mailto:injuryclinics@therealbuzzgroup.com"
+                           class="injury_clinic_contact">Contact Us</a>
+                        <span>to find out how you can advertise your injury clinic</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div id="clinic-links">
+                        <span class="find">Find Clinic in:</span><br/>
+                        <a href="{% url 'clinics:injury_clinics' %}">All</a> |
+                    {% for region in regrions %}
+                        <a href="{% url 'clinics:filter_clinics' filter_term=region %}">
+                            {{ region }}
+                        </a> |
+                    {% if forloop.last %}
+                        <a href="{% url 'clinics:filter_clinics' filter_term=region %}">
+                            {{ region }}
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                    </div>
+
+                {% for clinic in tier_1 %}
+                    <div class="clinic-row {{ clinic.display_class }}">
+                        <div class="clinic-logo">
+                            <a href="{% url 'clinics:redirect' clinic_id=clinic.id %}" target="_blank">
+                                <img src="{{ clinic.display_logo }}"
+                                alt="{{ clinic.charity_name }}"/>
+                            </a>
+                        </div>
+                        <h2>{{ clinic.id }} {{ clinic.charity_name }}</h2>
+
+                        <p class="contact">
+                            Contact {{ clinic.contact_name }} on {{ clinic.contact_phone }}
+                        </p>
+                        <p class="full-width">{{ clinic.charity_desc }}</p>
+                        <p>
+                            <a href="{% url 'clinics:redirect' clinic_id=clinic.id %}" target="_blank">
+                                Find out more information
+                            </a>
+                        </p>
+                    </div>
+                {% endfor %}
+
+                {% for clinic in tier_2 %}
+                    <div class="clinic-row {{ clinic.display_class }}{% if forloop.first %} first {% endif %}">
+                        <div class="clinic-logo">
+                            <a href="{% url 'clinics:redirect' clinic_id=clinic.id %}" target="_blank">
+                                <img src="{{ clinic.display_logo }}"
+                                alt="{{ clinic.charity_name }}"/>
+                            </a>
+                        </div>
+                        <h2>{{ clinic.id }} {{ clinic.charity_name }}</h2>
+
+                        <p class="contact">
+                            Contact {{ clinic.contact_name }} on {{ clinic.contact_phone }}
+                        </p>
+                        <p class="full-width">{{ clinic.charity_desc }}</p>
+                        <p>
+                            <a href="{% url 'clinics:redirect' clinic_id=clinic.id %}" target="_blank">
+                                Find out more information
+                            </a>
+                        </p>
+                    </div>
+                {% endfor %}
+                {% for clinic in tier_3 %}
+                    <div class="clinic-row {{ clinic.display_class }}{% if forloop.first %} first {% endif %}">
+                        <div class="clinic-logo">
+                            <a href="{% url 'clinics:redirect' clinic_id=clinic.id %}" target="_blank">
+                                <img src="{{ clinic.display_logo }}"
+                                alt="{{ clinic.charity_name }}"/>
+                            </a>
+                        </div>
+                        <h2>{{ clinic.id }} {{ clinic.charity_name }}</h2>
+
+                        <p class="contact">
+                            Contact {{ clinic.contact_name }} on {{ clinic.contact_phone }}
+                        </p>
+                        <p class="full-width">{{ clinic.charity_desc }}</p>
+                        <p>
+                            <a href="{% url 'clinics:redirect' clinic_id=clinic.id %}" target="_blank">
+                                Find out more information
+                            </a>
+                        </p>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </section>
+{% endblock content %}
